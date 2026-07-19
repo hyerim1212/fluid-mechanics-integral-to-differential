@@ -14,14 +14,14 @@ Reynolds Transport Theorem and control-volume mass balance
 - Conservation of mass
 - Steady and unsteady flow
 - Mass flow rate and volume flow rate
-- 
+
 ### Problems solved
 
 - Steady incompressible nozzle flow
 - Multiple-inlet and single-outlet flow
 - Unsteady tank-filling problem
 - Mass-balance residual verification
-- 
+  
 ### Difficulties
 
 - Applying density correctly when multiple streams have different densities
