@@ -39,6 +39,12 @@ Completed and uploaded:
 Study the integral linear-momentum equation and develop a control-volume
 simulation involving forces, pressure, and momentum flux.
 
+### Verification
+
+- For Case 1, the calculated outlet velocity was 8.0 m/s.
+- The inlet and outlet mass flow rates were both 15.708 kg/s.
+- The mass-balance residual was 0.0 kg/s.
+
 ### Summary
 본격적으로 note 작성 및 개인 project 진행을 위해 방학 동안 공부한 내용을 정리하는 시간을 가졌다. 
 제일 최근에 공부한 RTT를 다루었다.
