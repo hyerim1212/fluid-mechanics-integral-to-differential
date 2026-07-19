@@ -168,9 +168,11 @@ def tank_height(initial_height, inlet_flow_rate, outlet_flow_rate, tank_area, ti
         raise ValueError("Time must be nonnegative.")
 
     height = initial_height + ((inlet_flow_rate - outlet_flow_rate)/tank_area)*time
-    empty_time = tank_area * initial_height / (outlet_flow_rate - inlet_flow_rate)
-
+    
     if height < 0:
+
+        empty_time = tank_area * initial_height / (outlet_flow_rate - inlet_flow_rate)
+        
         raise ValueError(
             "The calculated height is negative. "
             "The tank becomes empty before the specified time."
