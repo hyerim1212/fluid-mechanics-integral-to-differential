@@ -1,29 +1,31 @@
-# Fluid Mechanics: Integral to Differential Analysis
+# Fluid Mechanics: From Integral to Differential Analysis
 
-This repository records my study of fluid mechanics from integral
-control-volume analysis to differential analysis.
+## Project Overview
+
+## Central Research Question
 
 ## Current Progress
 
-### 00. Reynolds Transport Theorem
-
-- Control-volume mass balance
-- Steady and unsteady flow
-- Mass flow rate and volume flow rate
-- Multiple-inlet and multiple-outlet systems
-- Unsteady tank filling
-
-Notebook:
-
-- `simulations/00_Reynolds_Transport_Theorem/control_volume_mass_balance.ipynb`
+- [x] Reynolds Transport Theorem
+- [x] Control-volume mass balance
+- [x] Integral linear-momentum analysis
+- [ ] Integral energy analysis
+- [ ] Differential analysis
+- [ ] Viscous-flow analytical solution
+- [ ] Finite-difference method
+- [ ] Grid-convergence study
 
 ## Repository Structure
 
-- `proposal/`: project proposal and schedule
-- `notes/`: theoretical study notes
-- `simulations/`: Python and Jupyter simulations
-- `progress/`: daily study logs and progress records
+## Key Results
 
+## How to Run
+
+## Project Roadmap
+
+## Latest Update
+
+## Final Deliverables
 ## Requirements
 
 ```bash
