@@ -2,25 +2,22 @@
 
 ## Project Overview
 
-This repository documents an independent fluid-mechanics study project that connects
-
-[
-\text{physical system}
-\rightarrow
-\text{integral analysis}
-\rightarrow
-\text{differential analysis}
-\rightarrow
-\text{analytical solution}
-\rightarrow
-\text{numerical solution}
-\rightarrow
-\text{verification}.
-]
+This repository documents an independent fluid-mechanics study project that connects physical modeling, integral analysis, differential analysis, analytical solutions, numerical solutions, and verification.
 
 The project begins with control-volume analysis and the Reynolds transport theorem. It will gradually proceed toward the differential analysis of viscous flow, an analytical solution for fully developed laminar internal flow, and a finite-difference numerical solution.
 
-The primary goal is not simply to reproduce known equations or generate graphs. Each stage is designed to connect the governing conservation law, physical assumptions, mathematical derivation, computational implementation, and verification process.
+The primary goal is not simply to reproduce known equations or generate graphs. Each stage connects:
+
+* governing conservation laws;
+* physical assumptions;
+* mathematical derivations;
+* computational implementations;
+* verification procedures;
+* physical interpretations.
+
+The overall project sequence is:
+
+**Physical system → Integral analysis → Differential analysis → Analytical solution → Numerical solution → Verification**
 
 ---
 
@@ -28,7 +25,7 @@ The primary goal is not simply to reproduce known equations or generate graphs. 
 
 > How can integral and differential fluid-mechanics models be connected to describe pressure-driven internal flow, and how accurately can a finite-difference method reproduce the analytical velocity profile of fully developed laminar flow?
 
-The project also considers the following supporting questions:
+Supporting questions include:
 
 * What quantities can be predicted using a control-volume model?
 * Why can integral analysis determine overall forces and flow rates without determining the complete velocity field?
@@ -46,24 +43,24 @@ The project also considers the following supporting questions:
 
 ### Progress
 
-* [x] Physical-system and repository setup
-* [x] Reynolds transport theorem review
-* [x] Control-volume mass balance
-* [x] Reusable mass-balance functions
-* [x] Integral linear-momentum equation
-* [x] Momentum-flux calculation
-* [x] Pressure-force and wall-force analysis
-* [x] Reusable momentum-analysis functions
-* [ ] Completion of integral linear-momentum notes
-* [ ] Integral energy analysis
-* [ ] Differential continuity equation
-* [ ] Differential momentum equation
-* [ ] Viscous-flow analytical solution
-* [ ] Finite-difference method
-* [ ] Analytical–numerical comparison
-* [ ] Grid-convergence study
-* [ ] Parameter study
-* [ ] Final technical report
+* Completed: Physical-system and repository setup
+* Completed: Reynolds transport theorem review
+* Completed: Control-volume mass balance
+* Completed: Reusable mass-balance functions
+* Completed: Integral linear-momentum equation
+* Completed: Momentum-flux calculations
+* Completed: Pressure-force and wall-force analysis
+* Completed: Reusable momentum-analysis functions
+* In progress: Completion of integral linear-momentum notes
+* Planned: Integral energy analysis
+* Planned: Differential continuity equation
+* Planned: Differential momentum equation
+* Planned: Viscous-flow analytical solution
+* Planned: Finite-difference method
+* Planned: Analytical and numerical comparison
+* Planned: Grid-convergence study
+* Planned: Parameter study
+* Planned: Final technical report
 
 ---
 
@@ -89,22 +86,17 @@ The theorem provides the foundation for the integral mass, momentum, and energy 
 
 A computational model was developed to analyze mass accumulation in a control volume.
 
-The governing relation is
+The governing relation is:
 
-[
-\frac{dm_{\mathrm{CV}}}{dt}
-===========================
+**Rate of mass accumulation in the control volume = Total inlet mass flow rate − Total outlet mass flow rate**
 
-## \sum_{\mathrm{in}}\dot{m}
+For an incompressible fluid:
 
-\sum_{\mathrm{out}}\dot{m}.
-]
+**Mass flow rate = Density × Volume flow rate**
 
-For an incompressible fluid,
+and
 
-[
-\dot{m}=\rho Q=\rho A V.
-]
+**Mass flow rate = Density × Cross-sectional area × Average velocity**
 
 The implementation includes:
 
@@ -123,31 +115,9 @@ Reusable functions were separated from the main notebook so that they can be app
 
 The integral linear-momentum equation was studied and implemented for steady control-volume problems.
 
-The general form is
+For steady, one-dimensional inlet and outlet flows, the net momentum flux is calculated as:
 
-[
-\sum \mathbf{F}_{\mathrm{CV}}
-=============================
-
-\frac{\partial}{\partial t}
-\int_{\mathrm{CV}}
-\rho\mathbf{V},dV
-+
-\int_{\mathrm{CS}}
-\rho\mathbf{V}
-(\mathbf{V}\cdot\mathbf{n}),dA.
-]
-
-For steady, one-dimensional inlet and outlet flows, the momentum-flux term becomes
-
-[
-\mathbf{P}_{\mathrm{net}}
-=========================
-
-## \sum_{\mathrm{out}}\dot{m}\mathbf{V}
-
-\sum_{\mathrm{in}}\dot{m}\mathbf{V}.
-]
+**Net momentum flux = Sum of outlet momentum flow rates − Sum of inlet momentum flow rates**
 
 The current notebook examines several representative cases.
 
@@ -157,73 +127,48 @@ A steady incompressible flow enters and leaves a constant-area straight duct wit
 
 Result:
 
-[
-\mathbf{P}_{\mathrm{net}}
-=========================
+**Net momentum flux = (0, 0, 0) N**
 
-(0,0,0)\ \mathrm{N}.
-]
+This case demonstrates that a zero net momentum flux does not imply that every individual force is zero.
 
-This case demonstrates that a zero net momentum flux does not imply that all individual forces vanish. Pressure and friction forces may still exist while their vector sum is zero.
+Pressure and friction forces may still exist if their vector sum is zero.
 
 #### Case 2: Accelerating nozzle flow
 
 A reduction in cross-sectional area increases the outlet speed under steady incompressible flow.
 
-The case connects:
+This case connects:
 
-* continuity;
+* mass conservation;
 * outlet velocity;
 * mass flow rate;
 * streamwise momentum-flux change.
 
-The calculated net momentum flux was
+The calculated result was:
 
-[
-\mathbf{P}_{\mathrm{net}}
-=========================
-
-(60,0,0)\ \mathrm{N}.
-]
+**Net momentum flux = (60, 0, 0) N**
 
 #### Case 3: Ninety-degree elbow
 
 The elbow case treats momentum as a vector quantity and includes pressure forces at the inlet and outlet.
 
-The calculated net momentum flux was
+The calculated results were:
 
-[
-\mathbf{P}_{\mathrm{net}}
-=========================
+**Net momentum flux = (-80, 80, 0) N**
 
-(-80,80,0)\ \mathrm{N}.
-]
+**Wall force on the fluid = (-680, 480, 0) N**
 
-The calculated wall force on the fluid was
+By Newton’s third law:
 
-[
-\mathbf{F}_{\mathrm{wall\ on\ fluid}}
-=====================================
+**Force exerted by the fluid on the elbow = (680, -480, 0) N**
 
-(-680,480,0)\ \mathrm{N}.
-]
-
-By Newton’s third law, the force exerted by the fluid on the elbow was
-
-[
-\mathbf{F}_{\mathrm{fluid\ on\ elbow}}
-======================================
-
-(680,-480,0)\ \mathrm{N}.
-]
-
-These results verify that the direction of each velocity, pressure force, and reaction force must be handled explicitly.
+These results demonstrate that the directions of velocity, pressure force, wall force, and reaction force must be handled explicitly.
 
 ---
 
 ## Current Physical Interpretation
 
-The completed work establishes the following distinction:
+The completed work establishes an important distinction between integral and differential analysis.
 
 ### Integral analysis can determine
 
@@ -238,7 +183,8 @@ The completed work establishes the following distinction:
 * the complete internal velocity field;
 * local velocity gradients;
 * local shear-stress distributions;
-* the transverse velocity profile (u(y)).
+* the transverse velocity profile;
+* the variation of velocity inside the flow domain.
 
 Determining these local quantities requires a differential formulation of mass and momentum conservation.
 
@@ -258,11 +204,11 @@ fluid-mechanics-integral-to-differential/
 │
 └── simulations/
     └── 01_integral_analysis/
-        ├── mass-balance notebook
+        ├── 01_control_volume_mass_balance.ipynb
         ├── 01_linear_momentum_balance.ipynb
         │
         └── src/
-            ├── reusable mass-balance functions
+            ├── mass-balance module
             └── momentum_tool.py
 ```
 
@@ -284,29 +230,40 @@ report/
 
 ---
 
-## File Organization Principle
+## Documentation Structure
 
 The repository follows three levels of documentation.
 
-### Root `README.md`
+### Root README
 
-Provides the current project overview, overall progress, major results, repository structure, and roadmap.
+The root README provides:
 
-### Unit-level documentation
+* the overall project purpose;
+* the current project status;
+* major completed results;
+* the repository structure;
+* the long-term roadmap.
 
-Each major study unit will contain a README or equivalent explanatory document describing:
+### Unit-Level README Files
 
-* objectives;
+Each major study unit will contain a README file or an equivalent explanatory document.
+
+A unit-level README should include:
+
+* objective;
 * governing equations;
 * assumptions;
 * implementation;
 * verification;
-* conclusions;
+* physical interpretation;
+* conclusion;
 * connection to the next stage.
 
-### Daily learning log
+### Daily Learning Log
 
-`notes/daily_log.md` preserves the chronological learning process, including:
+The file `notes/daily_log.md` preserves the chronological learning process.
+
+Each daily entry records:
 
 * topics studied;
 * problems solved;
@@ -316,7 +273,7 @@ Each major study unit will contain a README or equivalent explanatory document d
 * verification results;
 * next steps.
 
-The root README presents the latest consolidated state, while the daily log preserves the full development history.
+The root README presents the latest consolidated project state, while the daily log preserves the complete development history.
 
 ---
 
@@ -335,7 +292,7 @@ On Windows PowerShell:
 
 ```powershell
 python -m venv .venv
-.venv\Scripts\Activate.ps1
+.venv/Scripts/Activate.ps1
 ```
 
 ### 3. Install the required packages
@@ -353,73 +310,76 @@ python -m jupyter notebook
 
 Open the desired notebook inside the `simulations` directory.
 
-> Run Jupyter from the repository root unless a notebook contains different path instructions. This allows the notebook to locate its corresponding `src` modules correctly.
+Run Jupyter from the repository root unless a notebook contains different path instructions. This allows the notebook to locate its corresponding source modules correctly.
 
 ---
 
 ## Verification Protocol
 
-Each computational result should satisfy the following checks.
+Each computational result should satisfy both physical and computational checks.
 
-### Physical checks
+### Physical Checks
 
-* Mass is conserved under steady incompressible conditions.
-* Momentum is treated as a vector.
-* Pressure-force directions are determined using control-surface normals.
-* The force exerted by the fluid on a solid is opposite to the force exerted by the solid on the fluid.
-* Units are dimensionally consistent.
-* Limiting cases produce physically reasonable results.
+* Mass must be conserved under steady incompressible conditions.
+* Momentum must be treated as a vector.
+* Pressure-force directions must be determined from the control-surface orientation.
+* The force exerted by the fluid on a solid must be opposite to the force exerted by the solid on the fluid.
+* Units must be dimensionally consistent.
+* Limiting cases must produce physically reasonable results.
 
-### Computational checks
+### Computational Checks
 
-* Invalid inputs are rejected.
-* Velocity vectors have consistent dimensions.
-* Mass flow rates are nonnegative.
-* Multiple inlet and outlet contributions are summed correctly.
-* Reusable functions are separated from demonstration notebooks.
-* Numerical results are compared with manually calculated benchmark cases.
+* Invalid inputs must be rejected.
+* Velocity vectors must have consistent dimensions.
+* Mass flow rates must be nonnegative.
+* Multiple inlet and outlet contributions must be summed correctly.
+* Reusable functions must be separated from demonstration notebooks.
+* Numerical results must be compared with manually calculated benchmark cases.
 
 ---
 
 ## Project Roadmap
 
-### Phase 1 — Integral Analysis
+### Phase 1: Integral Analysis
 
-* [x] Conservation of mass
-* [x] Linear momentum equation
-* [x] Pressure and wall-force analysis
-* [ ] Remaining linear-momentum applications
-* [ ] Energy equation
-* [ ] Comparison with Bernoulli analysis
+Completed:
 
-### Phase 2 — Differential Analysis
+* Conservation of mass
+* Linear momentum equation
+* Momentum-flux calculation
+* Pressure and wall-force analysis
 
-* [ ] Material derivative
-* [ ] Local and convective acceleration
-* [ ] Differential continuity equation
-* [ ] Differential momentum equation
-* [ ] Assumption-based equation reduction
+In progress:
 
-### Phase 3 — Viscous-Flow Analysis
+* Remaining linear-momentum applications
+* More complex control-volume problems
+
+Planned:
+
+* Energy equation
+* Comparison with Bernoulli analysis
+
+### Phase 2: Differential Analysis
+
+Planned topics:
+
+* material derivative;
+* local acceleration;
+* convective acceleration;
+* differential continuity equation;
+* differential momentum equation;
+* assumption-based equation reduction.
+
+### Phase 3: Viscous-Flow Analysis
 
 The primary physical system will be steady, incompressible, fully developed laminar flow between two stationary parallel plates.
 
-The expected velocity field will be represented as
+The flow will be represented by a streamwise velocity that changes only across the channel.
 
-[
-\mathbf{V}=(u(y),0,0).
-]
+The reduced streamwise momentum equation will balance:
 
-After applying the physical assumptions, the streamwise momentum equation will be reduced to
-
-[
-0
-=
-
--\frac{dp}{dx}
-+
-\mu\frac{d^2u}{dy^2}.
-]
+* the pressure gradient driving the flow;
+* the viscous diffusion resisting velocity differences.
 
 The analytical stage will determine:
 
@@ -429,24 +389,24 @@ The analytical stage will determine:
 * volume flow rate;
 * wall shear stress.
 
-### Phase 4 — Numerical Solution
+### Phase 4: Numerical Solution
 
-The governing differential equation will be discretized using a central finite-difference approximation:
+The governing second-order differential equation will be discretized using a central finite-difference approximation.
 
-[
-\frac{u_{i+1}-2u_i+u_{i-1}}{\Delta y^2}
-=======================================
+This will produce a matrix equation of the form:
 
-\frac{1}{\mu}\frac{dp}{dx}.
-]
+**Coefficient matrix × Unknown velocity vector = Source vector**
 
-The resulting linear system will be expressed as
+The numerical stage will include:
 
-[
-A\mathbf{u}=\mathbf{b}.
-]
+* grid generation;
+* coefficient-matrix construction;
+* boundary-condition implementation;
+* linear-system solution;
+* numerical integration;
+* comparison with the analytical solution.
 
-### Phase 5 — Verification
+### Phase 5: Verification
 
 The numerical result will be compared with the analytical solution using:
 
@@ -457,21 +417,29 @@ The numerical result will be compared with the analytical solution using:
 * centerline-velocity error;
 * grid-convergence analysis.
 
-Suggested grid sizes are
+Suggested grid-point counts are:
 
-[
-N=11,\ 21,\ 41,\ 81,\ 161.
-]
+* 11
+* 21
+* 41
+* 81
+* 161
 
-### Phase 6 — Parameter Study
+### Phase 6: Parameter Study
 
 The effects of the following variables will be investigated:
 
-* dynamic viscosity (\mu);
-* pressure gradient (dp/dx);
-* channel half-height (H).
+* dynamic viscosity;
+* pressure gradient;
+* channel half-height.
 
-The study will examine how each parameter affects the velocity profile, mean velocity, flow rate, and wall shear stress.
+The study will examine how each parameter affects:
+
+* the velocity profile;
+* maximum velocity;
+* mean velocity;
+* flow rate;
+* wall shear stress.
 
 ---
 
@@ -488,13 +456,24 @@ Completed work includes:
 * accelerating-nozzle analysis;
 * ninety-degree elbow force analysis;
 * pressure-force calculations;
-* wall and reaction-force calculations;
-* error handling for invalid velocity vectors and mass flow rates;
+* wall-force and reaction-force calculations;
+* error handling for invalid velocity vectors;
+* error handling for invalid mass flow rates;
 * separation of reusable momentum functions into `momentum_tool.py`.
 
-### Next step
+### Next Step
 
-Complete the remaining integral linear-momentum concepts and documentation, including more complex force contributions and moving or non-inertial control-volume considerations where applicable. The project will then proceed to integral energy analysis.
+The next step is to complete the remaining integral linear-momentum concepts and related documentation.
+
+This includes:
+
+* more complex force contributions;
+* nonuniform velocity distributions;
+* nonuniform pressure distributions;
+* moving control volumes;
+* non-inertial control-volume considerations, where applicable.
+
+The project will then proceed to integral energy analysis.
 
 ---
 
@@ -503,12 +482,14 @@ Complete the remaining integral linear-momentum concepts and documentation, incl
 The completed project is expected to include:
 
 * physical-system diagrams;
-* integral mass and momentum analyses;
+* integral mass analysis;
+* integral momentum analysis;
+* integral energy analysis;
 * explanation of the limitations of Bernoulli’s equation;
 * differential governing-equation derivation;
 * analytical laminar-flow solution;
 * finite-difference numerical solver;
-* analytical–numerical comparison;
+* analytical and numerical comparison;
 * grid-convergence study;
 * parameter studies;
 * reusable Python modules;
@@ -520,10 +501,10 @@ The completed project is expected to include:
 ## Project Principles
 
 1. State the physical system before selecting an equation.
-2. List assumptions before simplifying the governing law.
+2. List the assumptions before simplifying the governing law.
 3. Derive the mathematical model before coding.
 4. Check units and force directions.
-5. Verify each function with a simple benchmark.
+5. Verify each function using a simple benchmark.
 6. Distinguish local quantities from cross-sectional averages.
 7. Separate reusable functions from demonstration notebooks.
 8. Record errors and corrections.
@@ -534,7 +515,7 @@ The completed project is expected to include:
 
 ## Requirements
 
-Install the dependencies using:
+Install the required packages using:
 
 ```bash
 pip install -r requirements.txt
@@ -542,10 +523,10 @@ pip install -r requirements.txt
 
 The project primarily uses:
 
-* Python;
-* NumPy;
-* Matplotlib;
-* Jupyter Notebook.
+* Python
+* NumPy
+* Matplotlib
+* Jupyter Notebook
 
 The exact package versions and additional dependencies are specified in `requirements.txt`.
 
@@ -556,3 +537,4 @@ The exact package versions and additional dependencies are specified in `require
 **Hyerim Jung**
 
 First-year undergraduate independent study project in fluid mechanics, numerical analysis, and engineering computation.
+
