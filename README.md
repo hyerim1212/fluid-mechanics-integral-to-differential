@@ -17,13 +17,14 @@ The primary goal is not simply to reproduce known equations or generate graphs. 
 
 The overall project sequence is:
 
-**Physical system → Integral analysis → Differential analysis → Analytical solution → Numerical solution → Verification**
+**Physical modeling → Integral analysis → Differential analysis → Analytical solution → Numerical solution → Verification → Dynamic-system modeling → Basic feedback control**
 
 ---
 
 ## Central Research Question
 
 > How can integral and differential fluid-mechanics models be connected to describe pressure-driven internal flow, and how accurately can a finite-difference method reproduce the analytical velocity profile of fully developed laminar flow?
+> Can a verified fluid model be reformulated as a simple dynamic system suitable for basic feedback control?
 
 Supporting questions include:
 
@@ -37,32 +38,48 @@ Supporting questions include:
 
 ## Current Status
 
-**Current phase:** Integral analysis of fluid flow
-**Latest completed topic:** Integral linear-momentum analysis
-**Project start date:** July 19, 2026
+- Project start date: July 19, 2026
+- Current phase: Integral analysis of fluid flow
+- Latest completed topic: Integral linear-momentum conservation
+- Next major topic: Integral energy analysis
 
-### Progress
+## Completed
 
-* Completed: Physical-system and repository setup
-* Completed: Reynolds transport theorem review
-* Completed: Control-volume mass balance
-* Completed: Reusable mass-balance functions
-* Completed: Integral linear-momentum equation
-* Completed: Momentum-flux calculations
-* Completed: Pressure-force and wall-force analysis
-* Completed: Reusable momentum-analysis functions
-* In progress: Completion of integral linear-momentum notes
-* Planned: Integral energy analysis
-* Planned: Differential continuity equation
-* Planned: Differential momentum equation
-* Planned: Viscous-flow analytical solution
-* Planned: Finite-difference method
-* Planned: Analytical and numerical comparison
-* Planned: Grid-convergence study
-* Planned: Parameter study
-* Planned: Final technical report
+- Physical-system and repository setup
+- Reynolds transport theorem review
+- Control-volume mass balance
+- Steady and unsteady mass-conservation cases
+- Reusable mass-balance functions
+- Integral linear-momentum equation
+- Momentum-flux calculations
+- Pressure-force calculations
+- Wall-force and reaction-force calculations
+- Multiple-inlet and multiple-outlet systems
+- Moving control-volume concepts
+- Non-inertial control-volume concepts
+- Reusable momentum-analysis functions
+- Computational input validation and benchmark testing
 
----
+## In Progress
+
+Consolidation of the integral linear-momentum documentation
+Unit-level README organization
+Repository documentation update
+
+## Planned
+
+Integral energy analysis
+Comparison between Bernoulli analysis and viscous-flow analysis
+Differential continuity equation
+Differential momentum equation
+Viscous-flow analytical solution
+Finite-difference numerical solution
+Analytical and numerical comparison
+Grid-convergence study
+Parameter study
+Dynamic-system modeling
+Basic feedback-control extension
+Final technical report
 
 ## Completed Work
 
@@ -111,82 +128,64 @@ Reusable functions were separated from the main notebook so that they can be app
 
 ---
 
-### 3. Integral Linear-Momentum Analysis
+#### 3. Integral Linear-Momentum Analysis
 
-The integral linear-momentum equation was studied and implemented for steady control-volume problems.
+The integral linear-momentum equation was studied and implemented for steady and extended control-volume problems.
 
-For steady, one-dimensional inlet and outlet flows, the net momentum flux is calculated as:
+For one-dimensional inlet and outlet flows:
 
 **Net momentum flux = Sum of outlet momentum flow rates − Sum of inlet momentum flow rates**
 
-The current notebook examines several representative cases.
+The analysis includes:
 
-#### Case 1: Straight duct with unchanged velocity
+- straight ducts;
+- accelerating nozzles;
+- flow-direction changes;
+- 90-degree elbows;
+- pressure forces;
+- wall forces;
+- body forces;
+- multiple inlet and outlet streams;
+- moving control volumes;
+- non-inertial reference frames.
 
-A steady incompressible flow enters and leaves a constant-area straight duct with the same velocity.
+The computational implementation treats momentum and force as vector quantities.
 
-Result:
+Representative benchmark cases were used to verify:
 
-**Net momentum flux = (0, 0, 0) N**
+- conservation of mass;
+- momentum-flux direction;
+- pressure-force signs;
+- wall-force calculations;
+- action-reaction force pairs;
+- velocity-vector validation;
+- mass-flow-rate validation.
 
-This case demonstrates that a zero net momentum flux does not imply that every individual force is zero.
+Detailed derivations, numerical values, and physical interpretations are stored in the unit notebook and its related documentation.
 
-Pressure and friction forces may still exist if their vector sum is zero.
+## Integral and Differential Analysis
 
-#### Case 2: Accelerating nozzle flow
+The completed work establishes an important distinction between integral and differential modeling.
 
-A reduction in cross-sectional area increases the outlet speed under steady incompressible flow.
+### Integral Analysis Can Determine
 
-This case connects:
+- total mass accumulation;
+- average inlet and outlet quantities;
+- net momentum flux;
+- resultant force on a control volume;
+- pressure-force and wall-force relationships;
+- system-level flow and force balances.
+- 
+### Integral Analysis Does Not Directly Determine
+- the complete internal velocity field;
+- local velocity gradients;
+- local shear-stress distributions;
+- transverse velocity profiles;
+- local pressure and stress variation throughout the domain.
 
-* mass conservation;
-* outlet velocity;
-* mass flow rate;
-* streamwise momentum-flux change.
+These local quantities require differential conservation equations.
 
-The calculated result was:
-
-**Net momentum flux = (60, 0, 0) N**
-
-#### Case 3: Ninety-degree elbow
-
-The elbow case treats momentum as a vector quantity and includes pressure forces at the inlet and outlet.
-
-The calculated results were:
-
-**Net momentum flux = (-80, 80, 0) N**
-
-**Wall force on the fluid = (-680, 480, 0) N**
-
-By Newton’s third law:
-
-**Force exerted by the fluid on the elbow = (680, -480, 0) N**
-
-These results demonstrate that the directions of velocity, pressure force, wall force, and reaction force must be handled explicitly.
-
----
-
-## Current Physical Interpretation
-
-The completed work establishes an important distinction between integral and differential analysis.
-
-### Integral analysis can determine
-
-* total mass accumulation;
-* mean inlet and outlet quantities;
-* net momentum flux;
-* resultant forces on a control volume;
-* relationships among pressure, wall force, and flow rate.
-
-### Integral analysis does not directly determine
-
-* the complete internal velocity field;
-* local velocity gradients;
-* local shear-stress distributions;
-* the transverse velocity profile;
-* the variation of velocity inside the flow domain.
-
-Determining these local quantities requires a differential formulation of mass and momentum conservation.
+The next major stages of the project will therefore move from whole-control-volume balances to local field equations.
 
 ---
 
@@ -198,37 +197,37 @@ fluid-mechanics-integral-to-differential/
 ├── README.md
 ├── requirements.txt
 │
-├── notes/
-│   ├── daily_log.md
-│   └── concept_checklist.md
+├── note/
+│   ├── 00_Reynolds_Transport_Theorem/
+│   │   ├── README.md
+│   │   ├── control_volume_mass_balance.ipynb
+│   │   └── control_volume_utils.py
+│   │
+│   └── 01_integral_analysis/
+│       ├── README.md
+│       ├── 01_linear_momentum_balance.ipynb
+│       │
+│       └── src/
+│           ├── __init__.py
+│           ├── control_volume_utils_copy.py
+│           └── momentum_tool.py
 │
-└── simulations/
-    └── 01_integral_analysis/
-        ├── 01_control_volume_mass_balance.ipynb
-        ├── 01_linear_momentum_balance.ipynb
-        │
-        └── src/
-            ├── mass-balance module
-            └── momentum_tool.py
+└── progress/
+    ├── concept_checklist.md
+    └── daily_log.md
 ```
 
-The repository will expand as new stages are completed.
+### Directory Roles
 
-Planned additions include:
+* `note/00_Reynolds_Transport_Theorem/` contains the Reynolds transport theorem review, control-volume mass-balance notebook, and reusable mass-balance functions.
+* `note/01_integral_analysis/` contains the integral linear-momentum notebook, unit documentation, and reusable computational modules.
+* `note/01_integral_analysis/src/` contains Python functions separated from the explanatory notebook.
+* `progress/concept_checklist.md` tracks the concepts studied and verified.
+* `progress/daily_log.md` records the chronological development of the project.
+* `requirements.txt` lists the Python packages required to reproduce the notebooks.
 
-```text
-simulations/
-├── 01_integral_analysis/
-├── 02_differential_analysis/
-├── 03_viscous_flow/
-├── 04_finite_difference/
-└── 05_verification/
+Generated cache files such as `__pycache__/` and `.pyc` files are not shown because they are not part of the meaningful project structure.
 
-figures/
-report/
-```
-
----
 
 ## Documentation Structure
 
@@ -417,6 +416,9 @@ The numerical result will be compared with the analytical solution using:
 * centerline-velocity error;
 * grid-convergence analysis.
 
+## Phase 7: Dynamic-System Modeling 
+## Phase 8: Basic Feedback Control — Optional
+
 Suggested grid-point counts are:
 
 * 11
@@ -445,35 +447,35 @@ The study will examine how each parameter affects:
 
 ## Latest Update
 
-### July 20, 2026
+### July 21, 2026
 
-The integral linear-momentum equation was studied through control-volume force analysis and computational examples.
+The conceptual study of integral linear-momentum conservation was completed through moving and non-inertial control-volume analysis.
 
-Completed work includes:
+The current project work includes:
 
-* momentum-flux calculations for multiple inlets and outlets;
-* straight-duct analysis;
-* accelerating-nozzle analysis;
-* ninety-degree elbow force analysis;
-* pressure-force calculations;
-* wall-force and reaction-force calculations;
-* error handling for invalid velocity vectors;
-* error handling for invalid mass flow rates;
-* separation of reusable momentum functions into `momentum_tool.py`.
+- derivation and interpretation of the integral momentum equation;
+- momentum-flux calculations;
+- pressure-force analysis;
+- wall-force and reaction-force analysis;
+- straight-duct, nozzle, elbow, and multiple-stream cases;
+- moving control-volume concepts;
+- non-inertial reference-frame concepts;
+- reusable computational functions;
+- benchmark and invalid-input tests;
+- consolidated notebook documentation.
 
 ### Next Step
 
-The next step is to complete the remaining integral linear-momentum concepts and related documentation.
+The next stage is integral energy analysis.
 
-This includes:
+This stage will connect:
 
-* more complex force contributions;
-* nonuniform velocity distributions;
-* nonuniform pressure distributions;
-* moving control volumes;
-* non-inertial control-volume considerations, where applicable.
-
-The project will then proceed to integral energy analysis.
+- energy transport;
+- work and heat-transfer terms;
+- mechanical-energy loss;
+- Bernoulli’s equation;
+- viscous internal-flow analysis.
+- The project will then proceed to integral energy analysis.
 
 ---
 
@@ -538,3 +540,10 @@ The exact package versions and additional dependencies are specified in `require
 
 First-year undergraduate independent study project in fluid mechanics, numerical analysis, and engineering computation.
 
+## Long-Term Vision
+
+This project is intended as the first stage of a longer study in fluid mechanics, numerical methods, dynamic systems, and feedback control.
+
+The immediate objective is to construct and verify a trustworthy fluid-mechanics model.
+
+Only after that foundation is complete will the project expand toward dynamic-system representation and basic control.
