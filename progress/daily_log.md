@@ -243,3 +243,56 @@ The next stage should examine:
 비균일 속도 분포에서 평균 속도만으로 운동량 유량을 계산할 수 없는 이유와 운동량 보정계수의 역할을 정리하였다. 움직이는 검사체적에서는 절대 속도와 상대 속도를 구분하였고, 비관성계에서는 병진 및 회전에 따른 추가 가속도 항을 학습하였다.
 
 구현한 함수와 대표 계산 결과에 대해 정상 사례, 극한 사례, 잘못된 입력, 비균일 속도 분포 및 운동량 residual 검증을 수행하였다. 이를 통해 적분 선형 운동량 해석 파트의 1차 개념 학습과 계산 노트 작성을 마무리하였다. 이후 적분 에너지 방정식을 학습하고 Bernoulli 방정식과의 차이점과 점성 손실의 의미를 분석할 예정이다.
+
+## 2026-07-22
+
+### Topic
+
+Angular momentum balance for a control volume
+
+### Reviewed
+
+- Definition of angular momentum for a fluid system
+- Moment of force about a reference point
+- Material derivative of angular momentum
+- Application of the Reynolds Transport Theorem
+- Difference between angular momentum and its time rate of change
+- Integral angular-momentum equation for a fixed control volume
+
+### Work completed
+
+- Started the draft notebook for the angular-momentum-balance section
+- Derived the relation between the moment of external forces and the rate of change of angular momentum
+- Applied the Reynolds Transport Theorem to angular momentum
+
+### Difficulties
+
+- Distinguishing angular momentum itself from its material time derivative
+- Connecting the particle-level moment equation to the system-level integral equation
+- Determining where the material derivative and system integral should appear
+- Keeping the angular-momentum notation consistent with the expressions used in the lecture
+
+### Result
+
+Created a preliminary theory draft for the angular-momentum-balance notebook.
+
+The draft now separates the angular momentum of the system from its time rate of change and connects the system equation to the Reynolds Transport Theorem.
+
+### Remaining work
+
+- Complete the computational implementation
+- Add a one-dimensional steady-flow form
+- Include an application example
+- Verify vector directions, signs, and units
+- Expand the physical interpretation of each term
+- Review and complete the notebook structure
+
+### Next step
+
+On July 23, implement the angular-momentum flux calculation and organize the computational section.
+
+On July 24, strengthen the derivation, physical interpretation, and application example to complete the angular-momentum-balance notebook.
+
+### Summary
+
+유동의 적분해석: 각운동량 보존법칙에 대해 공부하였다. 이에 대해 간단한 공식 유도 초안 노트를 작성하였다.
