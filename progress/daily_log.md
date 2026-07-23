@@ -244,6 +244,8 @@ The next stage should examine:
 
 구현한 함수와 대표 계산 결과에 대해 정상 사례, 극한 사례, 잘못된 입력, 비균일 속도 분포 및 운동량 residual 검증을 수행하였다. 이를 통해 적분 선형 운동량 해석 파트의 1차 개념 학습과 계산 노트 작성을 마무리하였다. 이후 적분 에너지 방정식을 학습하고 Bernoulli 방정식과의 차이점과 점성 손실의 의미를 분석할 예정이다.
 
+---
+
 ## 2026-07-22
 
 ### Topic
@@ -296,3 +298,79 @@ On July 24, strengthen the derivation, physical interpretation, and application 
 ### Summary
 
 유동의 적분해석: 각운동량 보존법칙에 대해 공부하였다. 이에 대해 간단한 공식 유도 초안 노트를 작성하였다.
+
+---
+
+## 2026-07-23
+
+### Topic
+
+Integral angular-momentum balance and computational implementation
+
+### Reviewed
+
+* Angular momentum of a system about a fixed reference point
+* Specific angular momentum, (\mathbf{r}\times\mathbf{V})
+* Angular-momentum form of the Reynolds Transport Theorem
+* Angular-momentum flux across a control surface
+* Signed mass flow rate based on the outward unit normal vector
+* Relationship between net angular-momentum flux and external torque
+* Direction of torque determined by the right-hand rule
+
+### Implemented
+
+Created reusable functions for angular-momentum calculations:
+
+* `mass_flow_rate`
+* `specific_angular_momentum`
+* `angular_momentum_flux`
+* `net_external_torque`
+
+The functions were separated from the main notebook so that the notebook could focus on physical modeling, verification, and interpretation.
+
+### Verification
+
+The functions were tested for:
+
+* positive mass flow at an outlet
+* negative mass flow at an inlet
+* zero mass flow through a wall
+* positive and negative cross-product directions
+* zero angular momentum for parallel position and velocity vectors
+* agreement between direct angular-momentum flux calculations and combined function calculations
+* agreement between the direct sum of surface fluxes and `net_external_torque`
+
+All tests passed.
+
+### Visualization
+
+Created a Python schematic showing:
+
+* the fixed reference point (O)
+* the inlet and outlet locations
+* position vectors
+* velocity vectors
+* outward unit normal vectors
+* the negative (z)-direction
+* the clockwise torque direction
+
+### Difficulties
+
+* Distinguishing angular momentum from angular-momentum flux
+* Applying the correct sign convention at inlet and outlet surfaces
+* Comparing NumPy arrays inside conditional statements
+* Interpreting steady flow without assuming that angular-momentum flux must be identical at every control surface
+* Describing torque direction without implying that the control volume itself rotates
+
+### Result
+
+Completed the initial computational implementation of the integral angular-momentum balance.
+
+### Next Step
+
+Improve the theoretical explanation and notation in the angular-momentum balance notebook, then examine how pressure, wall forces, and support reactions contribute to the external torque in a more detailed control-volume problem.
+
+### Summary
+
+각운동량 보존식의 계산에 필요한 함수들을 작성하였고, 입구와 출구에서의 signed mass flow rate, 단위질량당 각운동량, 각운동량 유량 및 순외부토크를 계산하는 사례를 완성하였다. 질량보존과 함수 간 계산 결과를 검증하였으며, 기준점에 대한 위치벡터와 속도벡터의 방향 관계가 각운동량 유량을 결정한다는 점을 확인하였다.
+
